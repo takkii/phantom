@@ -1,6 +1,5 @@
 import csv
 import gc
-import multiprocessing
 import os
 import re
 import yaml
