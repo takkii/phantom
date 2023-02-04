@@ -14,7 +14,7 @@ class UnInstallerRunner
   def self.run
     encoding_style
     FileUtils.rm_rf(File.expand_path('~/config'))
-    stdout_rq, _stderr_rq, _status_rq = Open3.capture3("pip uninstall -y -r requirements.txt ")
+    stdout_rq, _stderr_rq, _status_rq = Open3.capture3("pip3 uninstall -y -r requirements.txt ")
     stdout_rq
   end
 end
