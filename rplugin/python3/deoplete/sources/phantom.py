@@ -31,7 +31,7 @@ class Source(Base):
             # Set the dictionary.
             with open(os.path.expanduser("~/config/load.yml")) as yml:
                 config = yaml.safe_load(yml)
-            yml_load = os.path.expanduser(config['Folder_Load_Path'])
+                yml_load = os.path.expanduser(config['Folder_Load_Path'])
 
             # Get the dictionary.
             if os.path.isdir(yml_load):
@@ -51,19 +51,19 @@ class Source(Base):
             complete = data_ruby
             complete.sort(key=itemgetter(0))
 
+            # result
+            return complete
+
         # TraceBack
         except Exception:
             with open("phantom_error.log", 'a') as log_py:
                 traceback.print_exc(file=log_py)
-            sys.exit(1)
+                sys.exit(1)
 
         # Custom Exception
         except ValueError as ext:
             print(ext)
 
-        # Finally + GC
+        # GC Start
         finally:
-            # result
-            return complete
-            # GC Start
             gc.enable()
