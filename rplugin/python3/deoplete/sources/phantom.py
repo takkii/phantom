@@ -1,14 +1,14 @@
-import csv
 import gc
 import os
 import re
+import sys
 import yaml
 import traceback
 from operator import itemgetter
 from deoplete.source.base import Base
 
 
-# GitHub: config version is v1.3.3
+# Use Config project
 class Source(Base):
 
     def __init__(self, vim):
@@ -31,15 +31,17 @@ class Source(Base):
             # Set the dictionary.
             with open(os.path.expanduser("~/config/load.yml")) as yml:
                 config = yaml.safe_load(yml)
-            a1 = os.path.expanduser(config['Folder_Load_Path'])
+            yml_load = os.path.expanduser(config['Folder_Load_Path'])
 
-            if os.path.isdir(a1):
+            # Get the dictionary.
+            if os.path.isdir(yml_load):
                 ruby_method = open(os.path.expanduser(
                     config['File_Load_Path']))
 
             # The dictionary not found.
             else:
-                print("Please, Check the path of phantom.")
+                raise ValueError("Please, Check the path of phantom.")
+                sys.exit(1)
 
             # read
             data = list(ruby_method.readlines())
@@ -47,19 +49,19 @@ class Source(Base):
             ruby_method.close()
 
             # sort and itemgetter
-            dic = data_ruby
-            dic.sort(key=itemgetter(0))
-            return dic
+            complete = data_ruby
+            complete.sort(key=itemgetter(0))
 
+        # TraceBack
         except Exception:
             traceback.print_exc()
-        except OSError as e:
-            print(e)
-        except ZeroDivisionError as zero_e:
-            print(zero_e)
-        except TypeError as type_e:
-            print(type_e)
-        except FileNotFoundError as file_not:
-            print(file_not)
+        # Custom Exception
+        except ValueError as ext:
+            print(ext)
+
+        # Finally + GC
         finally:
+            # result
+            return complete
+            # GC Start
             gc.enable()
