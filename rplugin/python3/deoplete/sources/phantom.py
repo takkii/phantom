@@ -43,7 +43,7 @@ class Source(Base):
 
             # read
             data = list(ruby_method.readlines())
-            data_ruby = list(map(lambda s: s.rstrip(), data))
+            data_ruby = [s.rstrip() for s in data]
             ruby_method.close()
 
             # sort and itemgetter
