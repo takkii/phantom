@@ -41,7 +41,6 @@ class Source(Base):
             # The dictionary not found.
             else:
                 raise ValueError("Please, Check the path of phantom.")
-                sys.exit(1)
 
             # read
             data = list(ruby_method.readlines())
@@ -54,7 +53,10 @@ class Source(Base):
 
         # TraceBack
         except Exception:
-            traceback.print_exc()
+            with open("phantom_error.log", 'a') as log_py:
+                traceback.print_exc(file=log_py)
+            sys.exit(1)
+
         # Custom Exception
         except ValueError as ext:
             print(ext)
