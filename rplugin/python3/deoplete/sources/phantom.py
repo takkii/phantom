@@ -42,6 +42,17 @@ class Source(Base):
             else:
                 raise ValueError("Please, Check the path of phantom.")
 
+        # TraceBack
+        except Exception:
+            with open("phantom_error.log", 'a') as log_py:
+                traceback.print_exc(file=log_py)
+                sys.exit()
+
+        # Custom Exception
+        except ValueError as ext:
+            print(ext)
+
+        else:
             # read
             data = list(ruby_method.readlines())
             data_ruby = [s.rstrip() for s in data]
@@ -53,17 +64,4 @@ class Source(Base):
 
             # result
             return complete
-
-        # TraceBack
-        except Exception:
-            with open("phantom_error.log", 'a') as log_py:
-                traceback.print_exc(file=log_py)
-                sys.exit()
-
-        # Custom Exception
-        except ValueError as ext:
-            print(ext)
-
-        # GC Start
-        finally:
             gc.enable()
