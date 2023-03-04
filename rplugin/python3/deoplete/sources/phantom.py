@@ -50,6 +50,7 @@ class Source(Base):
         # Custom Exception
         except ValueError as ext:
             print(ext)
+            raise RuntimeError from None
 
         else:
             # read
