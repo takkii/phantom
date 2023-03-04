@@ -1,7 +1,6 @@
 import gc
 import os
 import re
-import sys
 import yaml
 import traceback
 from operator import itemgetter
@@ -46,7 +45,7 @@ class Source(Base):
         except Exception:
             with open("phantom_error.log", 'a') as log_py:
                 traceback.print_exc(file=log_py)
-                sys.exit()
+                raise RuntimeError from None
 
         # Custom Exception
         except ValueError as ext:
