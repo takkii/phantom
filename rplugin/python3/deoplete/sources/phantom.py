@@ -22,7 +22,8 @@ class Source(Base):
         self.rank = 500
 
     def get_complete_position(self, context):
-        m = re.search('[a-zA-Z0-9_?!]*$', context['input'])
+        ruby_complete = '[a-zA-Z0-9_?!]*$'
+        m = re.search(ruby_complete, context['input'])
         return m.start() if m else -1
 
     def gather_candidates(self, context):
