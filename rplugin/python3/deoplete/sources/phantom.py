@@ -53,6 +53,7 @@ class Source(Base):
             print(ext)
             raise RuntimeError from None
 
+        # ruby dictionary list complete
         else:
             # read
             data = list(ruby_method.readlines())
@@ -65,4 +66,6 @@ class Source(Base):
 
             # result
             return complete
-            gc.enable()
+
+            # GC exec
+            gc.collect()
