@@ -5,6 +5,7 @@ import yaml
 import traceback
 from operator import itemgetter
 from deoplete.source.base import Base
+from typing import Optional
 
 
 # Use Config project
@@ -12,9 +13,9 @@ class Source(Base):
 
     def __init__(self, vim):
         super().__init__(vim)
-        self.name = 'Phantom'
+        self.name: Optional[str] = 'Phantom'
         self.filetypes = ['ruby']
-        mark_synbol = '[Phantom]'
+        mark_synbol: Optional[str] = '[Phantom]'
         self.mark = str(mark_synbol)
         ruby_match = [r'\.[a-zA-Z0-9_?!]*|[a-zA-Z]\w*::\w*']
         slash_no_match = [r'[;/[^¥/]\*/]']
@@ -22,7 +23,7 @@ class Source(Base):
         self.rank = 500
 
     def get_complete_position(self, context):
-        ruby_complete = '[a-zA-Z0-9_?!]*$'
+        ruby_complete: Optional[str] = '[a-zA-Z0-9_?!]*$'
         m = re.search(ruby_complete, context['input'])
         return m.start() if m else -1
 
@@ -61,7 +62,7 @@ class Source(Base):
             ruby_method.close()
 
             # sort and itemgetter
-            complete = data_ruby
+            complete: Optional[list] = data_ruby
             complete.sort(key=itemgetter(0))
 
             # result
