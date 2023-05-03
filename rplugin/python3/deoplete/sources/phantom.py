@@ -29,15 +29,20 @@ class Source(Base):
 
     def gather_candidates(self, context):
         try:
-            # Set the dictionary.
-            with open(os.path.expanduser("~/config/load.yml")) as yml:
+            # Set config/folder/file Loading PATH
+            config_load: Optional[str] = '~/config/load.yml'
+            folder_load: Optional[str] = 'Folder_Load_Path'
+            file_load: Optional[str] = 'File_Load_Path'
+
+            # Set the dictionary
+            with open(os.path.expanduser(config_load)) as yml:
                 config = yaml.safe_load(yml)
-                yml_load = os.path.expanduser(config['Folder_Load_Path'])
+                yml_load = os.path.expanduser(config[folder_load])
 
             # Get the dictionary.
             if os.path.isdir(yml_load):
                 ruby_method = open(os.path.expanduser(
-                    config['File_Load_Path']))
+                    config[file_load]))
 
             # The dictionary not found.
             else:
@@ -45,7 +50,9 @@ class Source(Base):
 
         # TraceBack
         except Exception:
-            with open("phantom_error.log", 'a') as log_py:
+            file_load_path: Optional[str] = '~/phantom/phantom_error.log'
+            debug_word: Optional[str] = os.path.expanduser(file_load_path)
+            with open(debug_word, 'a') as log_py:
                 traceback.print_exc(file=log_py)
                 raise RuntimeError from None
 
@@ -58,7 +65,7 @@ class Source(Base):
         else:
             # read
             data = list(ruby_method.readlines())
-            data_ruby = [s.rstrip() for s in data]
+            data_ruby: Optional[list] = [s.rstrip() for s in data]
             ruby_method.close()
 
             # sort and itemgetter
