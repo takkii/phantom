@@ -1,10 +1,10 @@
 import gc
 import os
 import re
-import yaml
 import traceback
-from operator import itemgetter
+import yaml
 from deoplete.source.base import Base
+from operator import itemgetter
 from typing import Optional
 
 
@@ -46,7 +46,7 @@ class Source(Base):
 
             # Config Folder not found.
             else:
-                raise ValueError("None, Check Config Foler PATH.")
+                raise ValueError("None, Please Check the Config Folder.")
 
         # TraceBack
         except Exception:
@@ -65,7 +65,7 @@ class Source(Base):
 
             # Phantom Foler not found.
             else:
-                raise ValueError("None, Check Phantom Foler PATH.")
+                raise ValueError("None, Please Check the Phantom Folder.")
 
         # Custom Exception
         except ValueError as ext:
