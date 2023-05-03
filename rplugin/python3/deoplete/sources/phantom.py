@@ -34,7 +34,7 @@ class Source(Base):
             folder_load: Optional[str] = 'Folder_Load_Path'
             file_load: Optional[str] = 'File_Load_Path'
 
-            # Set the dictionary
+            # Load the dictionary
             with open(os.path.expanduser(config_load)) as yml:
                 config = yaml.safe_load(yml)
                 yml_load = os.path.expanduser(config[folder_load])
@@ -44,17 +44,27 @@ class Source(Base):
                 ruby_method = open(os.path.expanduser(
                     config[file_load]))
 
-            # The dictionary not found.
+            # Config Folder not found.
             else:
-                raise ValueError("Please, Check the path of phantom.")
+                raise ValueError("None, Check Config Foler PATH.")
 
         # TraceBack
         except Exception:
+            # Load/Create LogFile.
+            folder_load_path: Optional[str] = '~/phantom'
             file_load_path: Optional[str] = '~/phantom/phantom_error.log'
+            phantom_folder: Optional[str] = os.path.expanduser(folder_load_path)
             debug_word: Optional[str] = os.path.expanduser(file_load_path)
-            with open(debug_word, 'a') as log_py:
-                traceback.print_exc(file=log_py)
-                raise RuntimeError from None
+
+            # Load the dictionary.
+            if os.path.isdir(phantom_folder):
+                with open(debug_word, 'a') as log_py:
+                    traceback.print_exc(file=log_py)
+                    raise RuntimeError from None
+
+            # Phantom Foler not found.
+            else:
+                raise ValueError("None, Check Phantom Foler PATH.")
 
         # Custom Exception
         except ValueError as ext:
