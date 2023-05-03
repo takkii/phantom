@@ -31,8 +31,8 @@ class Source(Base):
         try:
             # Set config/folder/file Loading PATH
             config_load: Optional[str] = '~/config/load.yml'
-            folder_load: Optional[str] = 'Folder_Load_Path'
-            file_load: Optional[str] = 'File_Load_Path'
+            folder_load: Optional[str] = 'Folder_Load'
+            file_load: Optional[str] = 'File_Load'
 
             # Load the dictionary
             with open(os.path.expanduser(config_load)) as yml:
@@ -51,13 +51,14 @@ class Source(Base):
         # TraceBack
         except Exception:
             # Load/Create LogFile.
-            folder_load_path: Optional[str] = '~/phantom'
-            file_load_path: Optional[str] = '~/phantom/phantom_error.log'
-            phantom_folder: Optional[str] = os.path.expanduser(folder_load_path)
-            debug_word: Optional[str] = os.path.expanduser(file_load_path)
+            config_load: Optional[str] = '~/config/load.yml'
+            folder_load: Optional[str] = 'Except_Folder_load'
+            file_load: Optional[str] = 'Except_File_load'
+            phantom: Optional[str] = os.path.expanduser(config[folder_load])
+            debug_word: Optional[str] = os.path.expanduser(config[file_load])
 
             # Load the dictionary.
-            if os.path.isdir(phantom_folder):
+            if os.path.isdir(phantom):
                 with open(debug_word, 'a') as log_py:
                     traceback.print_exc(file=log_py)
                     raise RuntimeError from None
