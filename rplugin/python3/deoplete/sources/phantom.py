@@ -73,17 +73,21 @@ class Source(Base):
 
         # ruby dictionary list complete
         else:
-            # read
+            # data load.
             data = list(ruby_method.readlines())
             data_ruby: Optional[list] = [s.rstrip() for s in data]
-            ruby_method.close()
 
             # sort and itemgetter
             complete: Optional[list] = data_ruby
             complete.sort(key=itemgetter(0))
 
-            # result
+            # dictionary load result.
             return complete
+
+        # Once exec.
+        finally:
+            # OpenFile close.
+            ruby_method.close()
 
             # GC exec
             gc.collect()
