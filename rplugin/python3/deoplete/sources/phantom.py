@@ -29,25 +29,30 @@ class Source(Base):
 
     def gather_candidates(self, context):
         try:
-            # Set config/folder/file Loading PATH
+            # Settings config/folder/file Loading PATH.
             config_load: Optional[str] = '~/config/load.yml'
             folder_load: Optional[str] = 'Folder_Load'
             file_load: Optional[str] = 'File_Load'
 
-            # Load the dictionary
+            # Set the dictionary.
             with open(os.path.expanduser(config_load)) as yml:
                 config = yaml.safe_load(yml)
                 yml_load = os.path.expanduser(config[folder_load])
 
-            # Get the dictionary.
+            # Get Receiver/Ruby Method Complete.
             if os.path.isdir(yml_load):
-                ruby_method = open(os.path.expanduser(config[file_load]))
+                with open(os.path.expanduser(config[file_load])) as r_method:
+                    data = list(r_method.readlines())
+                    data_ruby: Optional[list] = [s.rstrip() for s in data]
+                    complete: Optional[list] = data_ruby
+                    complete.sort(key=itemgetter(0))
+                    return complete
 
             # Config Folder not found.
             else:
                 raise ValueError("None, Please Check the Config Folder.")
 
-        # TraceBack
+        # TraceBack.
         except Exception:
             # Load/Create LogFile.
             config_load: Optional[str] = '~/config/load.yml'
@@ -60,34 +65,20 @@ class Source(Base):
             if os.path.isdir(phantom):
                 with open(debug_word, 'a') as log_py:
                     traceback.print_exc(file=log_py)
+
+                    # throw except.
                     raise RuntimeError from None
 
             # Phantom Foler not found.
             else:
                 raise ValueError("None, Please Check the Phantom Folder.")
 
-        # Custom Exception
+        # Custom Exception.
         except ValueError as ext:
             print(ext)
             raise RuntimeError from None
 
-        # ruby dictionary list complete
-        else:
-            # data load.
-            data = list(ruby_method.readlines())
-            data_ruby: Optional[list] = [s.rstrip() for s in data]
-
-            # sort and itemgetter
-            complete: Optional[list] = data_ruby
-            complete.sort(key=itemgetter(0))
-
-            # dictionary load result.
-            return complete
-
-        # Once exec.
+        # Once Exec.
         finally:
-            # OpenFile close.
-            ruby_method.close()
-
-            # GC exec
+            # GC collection.
             gc.collect()
