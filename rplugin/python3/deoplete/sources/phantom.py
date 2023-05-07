@@ -41,8 +41,7 @@ class Source(Base):
 
             # Get the dictionary.
             if os.path.isdir(yml_load):
-                ruby_method = open(os.path.expanduser(
-                    config[file_load]))
+                ruby_method = open(os.path.expanduser(config[file_load]))
 
             # Config Folder not found.
             else:
