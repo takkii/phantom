@@ -31,8 +31,8 @@ class Source(Base):
         try:
             # Settings config/folder/file Loading PATH.
             config_load: Optional[str] = '~/config/load.yml'
-            folder_load: Optional[str] = 'Folder_Load'
-            file_load: Optional[str] = 'File_Load'
+            folder_load: Optional[str] = 'Home_Folder'
+            file_load: Optional[str] = 'Home_File'
 
             # Set the dictionary.
             with open(os.path.expanduser(config_load)) as yml:
@@ -55,8 +55,8 @@ class Source(Base):
         # TraceBack.
         except Exception:
             # Load/Create LogFile.
-            except_folder: Optional[str] = 'Except_Folder_load'
-            except_file: Optional[str] = 'Except_File_load'
+            except_folder: Optional[str] = 'Pri_Except_Folder'
+            except_file: Optional[str] = 'Pri_Except_File'
             phantom: Optional[str] = os.path.expanduser(config[except_folder])
             debug_word: Optional[str] = os.path.expanduser(config[except_file])
 
