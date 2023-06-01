@@ -17,14 +17,14 @@ class Source(Base):
         self.filetypes = ['php']
         mark_synbol: Optional[str] = '[PHP-complete]'
         self.mark = str(mark_synbol)
-        ruby_match = [r'\.[a-zA-Z0-9_?!]*|[a-zA-Z]\w*::\w*']
+        php_match = [r'\.[a-zA-Z0-9_?!]*|[a-zA-Z]\w*::\w*']
         slash_no_match = [r'[;/[^¥/]\*/]']
-        self.input_pattern = '|'.join(ruby_match + slash_no_match)
+        self.input_pattern = '|'.join(php_match + slash_no_match)
         self.rank = 500
 
     def get_complete_position(self, context):
-        ruby_complete: Optional[str] = '[a-zA-Z0-9_?!]*$'
-        m = re.search(ruby_complete, context['input'])
+        php_complete: Optional[str] = '[a-zA-Z0-9_?!]*$'
+        m = re.search(php_complete, context['input'])
         return m.start() if m else -1
 
     def gather_candidates(self, context):
@@ -42,11 +42,11 @@ class Source(Base):
                 with open(os.path.expanduser(config_load)) as yml:
                     config = yaml.safe_load(yml)
 
-                # Get Receiver/Ruby Method Complete.
+                # Get Receiver/php Method Complete.
                 with open(os.path.expanduser(config[file_load])) as r_method:
                     data = list(r_method.readlines())
-                    data_ruby: Optional[list] = [s.rstrip() for s in data]
-                    complete: Optional[list] = data_ruby
+                    data_php: Optional[list] = [s.rstrip() for s in data]
+                    complete: Optional[list] = data_php
                     complete.sort(key=itemgetter(0))
                     return complete
 
@@ -55,11 +55,11 @@ class Source(Base):
                 with open(os.path.expanduser(plug_config)) as yml:
                     config = yaml.safe_load(yml)
 
-                # Get Receiver/Ruby Method Complete.
+                # Get Receiver/php Method Complete.
                 with open(os.path.expanduser(config[plug_load])) as r_method:
                     data = list(r_method.readlines())
-                    plug_ruby: Optional[list] = [s.rstrip() for s in data]
-                    r_complete: Optional[list] = plug_ruby
+                    plug_php: Optional[list] = [s.rstrip() for s in data]
+                    r_complete: Optional[list] = plug_php
                     r_complete.sort(key=itemgetter(0))
                     return r_complete
 
