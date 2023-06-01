@@ -14,8 +14,8 @@ class Source(Base):
     def __init__(self, vim):
         super().__init__(vim)
         self.name: Optional[str] = 'Phantom'
-        self.filetypes = ['ruby']
-        mark_synbol: Optional[str] = '[Phantom]'
+        self.filetypes = ['php']
+        mark_synbol: Optional[str] = '[PHP-complete]'
         self.mark = str(mark_synbol)
         ruby_match = [r'\.[a-zA-Z0-9_?!]*|[a-zA-Z]\w*::\w*']
         slash_no_match = [r'[;/[^¥/]\*/]']
@@ -34,8 +34,8 @@ class Source(Base):
             plug_config: Optional[str] = '~/.neovim/plugged/config/load.yml'
 
             # Settings, Loading File PATH.
-            file_load: Optional[str] = 'Home_File'
-            plug_load: Optional[str] = 'File_Load'
+            file_load: Optional[str] = 'PHP_HOME'
+            plug_load: Optional[str] = 'PHP_File'
 
             # Home Folder, Set the dictionary.
             if os.path.isfile(os.path.expanduser(config_load)):
@@ -70,8 +70,8 @@ class Source(Base):
         # TraceBack.
         except Exception:
             # Load/Create LogFile.
-            except_folder: Optional[str] = 'Pri_Except_Folder'
-            except_file: Optional[str] = 'Pri_Except_File'
+            except_folder: Optional[str] = 'PHP_Except_Folder'
+            except_file: Optional[str] = 'PHP_Except_File'
             phantom: Optional[str] = os.path.expanduser(config[except_folder])
             debug_word: Optional[str] = os.path.expanduser(config[except_file])
 
