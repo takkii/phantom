@@ -3,8 +3,8 @@
 require 'open3'
 require 'fileutils'
 
-# Installer runner.
-class InstallerRunner
+# Create runner.
+class CreateRunner
   # default encoding utf-8, change encode here.
   def self.encoding_style
     Encoding.default_internal = 'UTF-8'
@@ -18,13 +18,13 @@ class InstallerRunner
     else
       FileUtils.mkdir('phantom_log')
       FileUtils.mv("#{File.dirname(__FILE__)}/phantom_log", File.expand_path('~/'))
-      puts 'Created a phantom_log folder.'
+      puts 'Created, phantom_log folder.'
     end
   end
 end
 
 begin
-  InstallerRunner.run
+  CreateRunner.run
 rescue StandardError => e
   puts e.backtrace
 ensure
