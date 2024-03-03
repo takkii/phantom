@@ -1,6 +1,6 @@
 *phantom*
 
-version: 2023/09/30
+version: 2024/03/03
 Author: takkii <karuma.reason@gmail.com>
 License: MIT
 
@@ -17,10 +17,13 @@ x = phantom                             but less than 4.0 is recommended
 ==============================================================================
 *./phantom*
 
-Load dictionary                         Plug 'takkii/config' or $HOME/config
-Same behavior as phantom                $HOME/config
-Create log folder                       ruby log_folder.rb
-Automatic environment construction      ruby install.rb
-Delete Config folder and Requirements   ruby uninstall.rb
+create a word list                      cd ~/.neovim/plugged/phantom/dict/
+                                        cd ~/.vim/plugged/phantom/dict/
+                                        php ./php_dict.php
+Create log folder                       ruby ./tools/create.rb
+Delete log folder                       ruby ./tools/delete.rb
+Develop env (dictionary generate)       php ./php_dict.php
+Develop env (dictionary move)           ruby ./dev/move.rb
+Develop env (dictionary delete)         ruby ./dev/remove.rb
 
 ==============================================================================
