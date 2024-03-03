@@ -3,7 +3,6 @@ import os
 import re
 import sys
 import traceback
-import yaml
 import warnings
 
 from deoplete.source.base import Base
@@ -18,9 +17,9 @@ class Source(Base):
 
     def __init__(self, vim):
         super().__init__(vim)
-        self.name: Optional[str] = 'Phantom'
+        self.name: Optional[str] = 'phantom'
         self.filetypes = ['php']
-        mark_synbol: Optional[str] = '[PHP-complete]'
+        mark_synbol: Optional[str] = '[php_method]'
         self.mark = str(mark_synbol)
         php_match = [r'\.[a-zA-Z0-9_?!]*|[a-zA-Z]\w*::\w*']
         slash_no_match = [r'[;/[^¥/]\*/]']
@@ -35,73 +34,79 @@ class Source(Base):
     def gather_candidates(self, context):
         try:
             # It doesn't support python4 yet.
-            py_major = sys.version_info[0]
-            py_minor = sys.version_info[1]
+            py_mj = sys.version_info[0]
+            py_mi = sys.version_info[1]
 
-            # 3.5 or higher python version is required.
-            if py_major == 3 and py_minor > 4:
-                # Settings, Config path is true/false change.
-                config_load: Optional[str] = '~/config/load.yml'
-                plug_config: Optional[
-                    str] = '~/.neovim/plugged/config/load.yml'
+            # 3.5 and higher, 4.x or less,python version is required.
+            if (py_mj == 3 and py_mi > 4) or (py_mj < 4):
 
-                # Settings, Loading File PATH.
-                file_load: Optional[str] = 'PHP_HOME'
-                plug_load: Optional[str] = 'PHP_File'
+                # Settings, vim-plug | neovim path is true/false folder search.
+                neo_f: Optional[str] = '~/.neovim/plugged/phantom/dict/'
+                neo_t = '~/.neovim/plugged/phantom/dict/php_dict.txt'
 
-                # Home Folder, Set the dictionary.
-                if os.path.exists(os.path.expanduser(config_load)):
-                    with open(os.path.expanduser(config_load)) as yml:
-                        config = yaml.safe_load(yml)
+                # Settings, vim-plug | vim path is true/false folder search.
+                vim_f: Optional[str] = '~/.vim/plugged/phantom/dict/'
+                vim_t = '~/.vim/plugged/phantom/dict/php_dict.txt'
 
-                    # Get Receiver/php Method Complete.
-                    with open(os.path.expanduser(
-                            config[file_load])) as r_method:
-                        data = list(r_method.readlines())
-                        data_php: Optional[list] = [s.rstrip() for s in data]
-                        complete: Optional[list] = data_php
-                        complete.sort(key=itemgetter(0))
-                        return complete
+                # Settings, $HOME/dict path is true/false folder search.
+                loc_f: Optional[str] = '~/dict/'
+                loc_t: Optional[str] = '~/dict/php_dict.txt'
 
-                # Use vim-plug, Set the dictionary.
-                elif os.path.exists(os.path.expanduser(plug_config)):
-                    with open(os.path.expanduser(plug_config)) as yml:
-                        config = yaml.safe_load(yml)
+                # Use vim-plug | neovim, Set the dictionary.
+                if os.path.exists(os.path.expanduser(neo_f)):
 
-                    # Get Receiver/php Method Complete.
-                    with open(os.path.expanduser(
-                            config[plug_load])) as r_method:
-                        data = list(r_method.readlines())
-                        plug_php: Optional[list] = [s.rstrip() for s in data]
-                        r_complete: Optional[list] = plug_php
-                        r_complete.sort(key=itemgetter(0))
-                        return r_complete
+                    # User side, normal function.
+                    with open(os.path.expanduser(neo_t)) as r_meth:
+                        neo_py: Optional[list] = list(r_meth.readlines())
+                        neo_comp: Optional[list] = [s.rstrip() for s in neo_py]
+                        neo_comp.sort(key=itemgetter(0))
+                        return neo_comp
+
+                # Use vim-plug | vim, Set the dictionary.
+                elif os.path.exists(os.path.expanduser(vim_f)):
+
+                    # User side, normal function.
+                    with open(os.path.expanduser(vim_t)) as r_vim:
+                        vim_py: Optional[list] = list(r_vim.readlines())
+                        vim_comp: Optional[list] = [s.rstrip() for s in vim_py]
+                        vim_comp.sort(key=itemgetter(0))
+                        return vim_comp
+
+                # $HOME/dict, Set the dictionary to develop mode.
+                elif os.path.exists(os.path.expanduser(loc_f)):
+
+                    # Function change destination.
+                    with open(os.path.expanduser(loc_t)) as rb_mt:
+                        dev_py: Optional[list] = list(rb_mt.readlines())
+                        dev_comp: Optional[list] = [s.rstrip() for s in dev_py]
+                        sorted(dev_comp, key=itemgetter(0))
+                        return dev_comp
 
                 # Config Folder not found.
                 else:
-                    raise ValueError("None, Please Check the Config Folder")
+                    raise ValueError("None, Please Check the dict Folder")
+
+            # Python_VERSION: 3.5 or higher and 4.x or less.
             else:
-                raise ValueError("Python Version Check, 3.5 or higher.")
+                raise ValueError("VERSION: 3.5 and higher, 4.x or less")
 
         # TraceBack.
         except Exception:
             # Load/Create LogFile.
-            except_folder: Optional[str] = 'PHP_Except_Folder'
-            except_file: Optional[str] = 'PHP_Except_File'
-            phantom: Optional[str] = os.path.expanduser(config[except_folder])
-            debug_word: Optional[str] = os.path.expanduser(config[except_file])
+            phantom: Optional[str] = os.path.expanduser('~/phantom_log/')
+            db_w: Optional[str] = os.path.expanduser('~/phantom_log/debug.log')
 
             # Load the dictionary.
             if os.path.isdir(phantom):
-                with open(debug_word, 'a') as log_py:
+                with open(db_w, 'a') as log_py:
                     traceback.print_exc(file=log_py)
 
                     # throw except.
                     raise RuntimeError from None
 
-            # Phantom Foler not found.
+            # phantom Foler not found.
             else:
-                raise ValueError("None, Please Check the Phantom Folder.")
+                raise ValueError("None, Please Check the phantom Folder.")
 
         # Custom Exception.
         except ValueError as ext:
