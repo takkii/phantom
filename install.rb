@@ -13,13 +13,13 @@ class InstallerRunner
 
   def self.run
     encoding_style
-    if File.exist?(File.expand_path('~/dict/php_dict.txt'))
-      puts 'Already have a php_dict File ... do nothing.'
+    if File.exist?('./dict/php_dict.txt')
+      puts 'Already, Have a php_dict.txt'
     else
       stdout_php = Open3.capture3("php ./dict/php_dict.php")
       stdout_php
       FileUtils.mv(['./php_dict.txt'], "./dict")
-      puts 'Created, ./dict/php_dict.txt'
+      puts 'Created, php_dict.txt in load path.'
     end
   end
 end
