@@ -16,8 +16,7 @@ class InstallerRunner
     if File.exist?('./dict/php_dict.txt')
       puts 'Already, Have a php_dict.txt'
     else
-      stdout_php = Open3.capture3("php ./dict/php_dict.php")
-      stdout_php
+      Open3.capture3("php ./dict/php_dict.php")
       FileUtils.mv(['./php_dict.txt'], "./dict")
       puts 'Created, php_dict.txt in load path.'
     end
