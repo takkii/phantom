@@ -1,6 +1,6 @@
 *phantom*
 
-version: 2024/03/03
+version: 2024/07/27
 Author: takkii <karuma.reason@gmail.com>
 License: MIT
 
@@ -27,8 +27,7 @@ x = phantom                             but less than 4.0 is recommended
 Create a word list manually             cd ~/.neovim/plugged/phantom/dict/
                                         cd ~/.vim/plugged/phantom/dict/
                                         php ./php_dict.php
-Create log folder                       ruby ./tools/create.rb
-Delete log folder                       ruby ./tools/delete.rb
+Log folder operations (create/delete)   ruby ./tools/cleaner.rb
 Develop env (dictionary generate)       php ./php_dict.php
 Develop env (dictionary move)           ruby ./dev/move.rb
 Develop env (dictionary delete)         ruby ./dev/remove.rb
