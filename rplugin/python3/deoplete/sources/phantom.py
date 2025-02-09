@@ -1,5 +1,6 @@
 import gc
 import os
+import platform
 import re
 import sys
 import traceback
@@ -19,7 +20,7 @@ class Source(Base):
         super().__init__(vim)
         self.name: Optional[str] = 'phantom'
         self.filetypes = ['php']
-        mark_synbol: Optional[str] = '[php_method]'
+        mark_synbol: Optional[str] = '[python: ' + str(platform.python_version()) + ']'
         self.mark = str(mark_synbol)
         php_match = [r'\.[a-zA-Z0-9_?!]*|[a-zA-Z]\w*::\w*']
         slash_no_match = [r'[;/[^¥/]\*/]']
