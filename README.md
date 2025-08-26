@@ -18,7 +18,7 @@ LICENSE) [![GitHub release](https://img.shields.io/github/release/takkii/phantom
 <br />
 
 <div align="center">
-  <img src="https://github.com/takkii/photo/blob/main/images/phantom.gif" alt="phantom images" title="logo">
+  <img src="https://github.com/takkii/photo/blob/main/images/real.gif" alt="phantom images" title="logo">
 </div>
 
 <br />
