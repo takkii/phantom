@@ -1,6 +1,6 @@
 *phantom*
 
-version: 2024/07/27
+version: 2025/08/26
 Author: takkii <karuma.reason@gmail.com>
 License: MIT
 
@@ -10,11 +10,8 @@ License: MIT
 Environment construction                Python3, vim-plug, deoplete.nvim
 Introduction (vim-plug)
 
-First and startup
-Plug 'takkii/phantom', { 'do': 'ruby ./install.rb' }
-
-Second and subsequent startups
 Plug 'takkii/phantom'
+Plug 'takkii/dict'
 
 Settings (deoplete.nvim)                :UpdateRemotePlugins
 Dependency removal                      pip3 install -r requirements.txt
@@ -22,14 +19,8 @@ Python3.5 ≦  x ＜ Python4.0             Python3.5 or higher
 x = phantom                             but less than 4.0 is recommended
 
 ==============================================================================
-*./phantom*
+*./phantom/tools/*
 
-Create a word list manually             cd ~/.neovim/plugged/phantom/dict/
-                                        cd ~/.vim/plugged/phantom/dict/
-                                        php ./php_dict.php
-Log folder operations (create/delete)   ruby ./tools/cleaner.rb
-Develop env (dictionary generate)       php ./php_dict.php
-Develop env (dictionary move)           ruby ./dev/move.rb
-Develop env (dictionary delete)         ruby ./dev/remove.rb
+Log folder operations (create/delete)   ruby cleaner.rb
 
 ==============================================================================
