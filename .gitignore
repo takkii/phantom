@@ -1,4 +1,2 @@
-/dict/php_dict.txt
-/rplugin/python3/deoplete/sources/__pycache__
+/rplugin/python3/deoplete/sources/__pycache__/*
 /venv
-
